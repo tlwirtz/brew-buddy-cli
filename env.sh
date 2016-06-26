@@ -1,4 +1,2 @@
-export DEBUG=brewBuddy:*
-export APP_SECRET=donttellanyone
-export PORT=3000
-export MONOGDB_URI=mongodb://localhost/brewBuddy
+export DEBUG=brewBuddyCli:*
+export BREW_BUDDY_REMOTE=https://brew-buddy-coffee-stage.herokuapp.com/
