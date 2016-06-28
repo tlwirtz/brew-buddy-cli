@@ -5,6 +5,7 @@ const superagent = require('superagent-use');
 const superPromise = require('superagent-promise-plugin');
 const chalk = require('chalk');
 const fs = require('fs');
+require('console.table');
 
 superagent.use(superPromise);
 
@@ -101,16 +102,17 @@ const getAllOrigins = function() {
 
 const formatOutput = function(entries) {
   const formatted = [];
-  entries.map((entry) => {
-    let line = '';
-    Object.keys(entry).map((key) => line += `${chalk.blue(key.toUpperCase())} ::  ${entry[key]}\n`);
-    formatted.push(line);
-  });
-
-  formatted.map((format) => {
-    console.log(format);
-  });
-  return formatted;
+  console.table(entries);
+  // entries.map((entry) => {
+  //   let line = '';
+  //   Object.keys(entry).map((key) => line += `${chalk.blue(key.toUpperCase())} ::  ${entry[key]}\n`);
+  //   formatted.push(line);
+  // });
+  //
+  // formatted.map((format) => {
+  //   console.log(format);
+  // });
+  // return formatted;
 };
 
 program
@@ -131,7 +133,6 @@ program
   .description('get all the entires')
   .action(function() {
     getAllEntries()
-    // .then((entries) => console.log(chalk.green('entres:: ' + entries)))
     .then((entries) => formatOutput(JSON.parse(entries)))
     .then()
     .catch((err) => console.log(chalk.red('error' + err.error.text)));
@@ -142,7 +143,6 @@ program
     .description('get all the flavors')
     .action(function() {
       getAllFlavors()
-      // .then((entries) => console.log(chalk.green('entres:: ' + entries)))
       .then((flavors) => formatOutput(JSON.parse(flavors)))
       .then()
       .catch((err) => console.log(chalk.red('error' + err.error.text)));
@@ -153,7 +153,6 @@ program
     .description('get all the origins')
     .action(function() {
       getAllOrigins()
-      // .then((entries) => console.log(chalk.green('entres:: ' + entries)))
       .then((origins) => formatOutput(JSON.parse(origins)))
       .then()
       .catch((err) => console.log(chalk.red('error' + err.error.text)));
