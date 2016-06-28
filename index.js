@@ -5,6 +5,7 @@ const superagent = require('superagent-use');
 const superPromise = require('superagent-promise-plugin');
 const chalk = require('chalk');
 const fs = require('fs');
+
 require('console.table');
 
 superagent.use(superPromise);
@@ -100,19 +101,22 @@ const getAllOrigins = function() {
   });
 };
 
-const formatOutput = function(entries) {
-  const formatted = [];
+const formatOutput = function(entries, keys) {
+  // const formatted = [];
+  // only keep the keys that are passed in
   console.table(entries);
+
+  // const newEntries = [];
   // entries.map((entry) => {
-  //   let line = '';
-  //   Object.keys(entry).map((key) => line += `${chalk.blue(key.toUpperCase())} ::  ${entry[key]}\n`);
-  //   formatted.push(line);
+  //   const newEntry = {};
+  //   Object.keys(entry).forEach((key) => {
+  //     if (keys.indexOf(key) !== 0){
+  //       newEntry[key] = entry[key];
+  //     }
+  //     newEntries.push(entry);
+  //   }
+  // );
   // });
-  //
-  // formatted.map((format) => {
-  //   console.log(format);
-  // });
-  // return formatted;
 };
 
 program
@@ -133,7 +137,7 @@ program
   .description('get all the entires')
   .action(function() {
     getAllEntries()
-    .then((entries) => formatOutput(JSON.parse(entries)))
+    .then((entries) => formatOutput(JSON.parse(entries), ['username', 'body']))
     .then()
     .catch((err) => console.log(chalk.red('error' + err.error.text)));
   });
