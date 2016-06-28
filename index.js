@@ -56,6 +56,7 @@ const signin = function(user, pass) {
   });
 };
 
+// refactor all of this out
 const getAllEntries = function() {
   const url = process.env.BREW_BUDDY_REMOTE;
   const token = getToken();
@@ -102,21 +103,15 @@ const getAllOrigins = function() {
 };
 
 const formatOutput = function(entries, keys) {
-  // const formatted = [];
-  // only keep the keys that are passed in
-  console.table(entries);
+  const mappedEntries = entries.map((entry) => {
+    let mappedEntry = {};
+    keys.forEach((key) => {
+      mappedEntry[key] = entry[key];
+    });
+    return mappedEntry;
+  });
 
-  // const newEntries = [];
-  // entries.map((entry) => {
-  //   const newEntry = {};
-  //   Object.keys(entry).forEach((key) => {
-  //     if (keys.indexOf(key) !== 0){
-  //       newEntry[key] = entry[key];
-  //     }
-  //     newEntries.push(entry);
-  //   }
-  // );
-  // });
+  console.table(mappedEntries);
 };
 
 program
