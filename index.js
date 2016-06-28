@@ -42,7 +42,7 @@ const signin = function(user, pass) {
   console.log('url', url);
   return new Promise((resolve, reject) => {
     superagent
-      .post(url + 'api/signin')
+      .get(url + 'api/signin')
       .set('Content-Type', 'application-json')
       .auth(user, pass)
       .then((res) => {
