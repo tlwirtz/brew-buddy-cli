@@ -103,11 +103,16 @@ const getAllOrigins = function() {
 };
 
 const formatOutput = function(entries, keys) {
+  let idx = 1;
   const mappedEntries = entries.map((entry) => {
+    if (!keys) return console.table(entries);
+
     let mappedEntry = {};
     keys.forEach((key) => {
+      mappedEntry.index = idx;
       mappedEntry[key] = entry[key];
     });
+    idx += 1;
     return mappedEntry;
   });
 
@@ -132,7 +137,7 @@ program
   .description('get all the entires')
   .action(function() {
     getAllEntries()
-    .then((entries) => formatOutput(JSON.parse(entries), ['username', 'body']))
+    .then((entries) => formatOutput(JSON.parse(entries), ['username', 'date', 'originId', 'methodId']))
     .then()
     .catch((err) => console.log(chalk.red('error' + err.error.text)));
   });
@@ -142,7 +147,7 @@ program
     .description('get all the flavors')
     .action(function() {
       getAllFlavors()
-      .then((flavors) => formatOutput(JSON.parse(flavors)))
+      .then((flavors) => formatOutput(JSON.parse(flavors), ['category', 'flavorType', 'title']))
       .then()
       .catch((err) => console.log(chalk.red('error' + err.error.text)));
     });
